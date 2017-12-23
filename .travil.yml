@@ -1,0 +1,29 @@
+language: cpp
+sudo: required
+dist: xenail
+compiler: gcc
+
+before_install:
+  - docker pull ubuntu:xenial
+  - docker run --name xenial -dti ubuntu:xenial bash
+  - docker cp . xenial:/root/source
+  - docker exec xenial apt-get -qq ubdate
+  - docker exec xenial apt-get -qq install software-properties-common
+  - docker exec xenial apt-get -qq install libcppunit-dev
+  - docker exec xenial g++ --version
+
+install:
+  - docker exec xenial /bin/sh -c "mkdir /root/source/build && cd /root/source/build"
+
+script:
+  - docker exec xenial /bin/sh -c "g++ ../hello-world.cpp"
+
+after_script:
+  - pwd
+  - cat /home/travis/build/palmelund/travis-test/build/cov-int/build-log.txt
+  - cat /home/travis/build/palmelund/travis-test/build/cov-int/scm_log.txt
+
+addons:
+
+notifications:
+  email: false
