@@ -10,7 +10,7 @@ before_install:
   - docker pull ubuntu:xenial
   - docker run --name xenial -dti ubuntu:xenial bash
   - docker cp . xenial:/root/source
-  - docker exec xenial apt-get -qq ubdate
+  - docker exec xenial apt-get -qq update
   - docker exec xenial apt-get -qq install software-properties-common
   - docker exec xenial apt-get -qq install libcppunit-dev
   - docker exec xenial g++ --version
